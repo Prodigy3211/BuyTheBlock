@@ -15,5 +15,5 @@ MonoBehaviour:
   displayName: Shop
   sprite: {fileID: 9092918805344203279, guid: d6bd1bd10a510ee44b6d0eb205b1db03, type: 3}
   baseCost: 100
-  baseOutputPerMinute: 10
+  baseOutputPerMinute: 450
   upgradeFactor: 1.6

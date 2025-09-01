@@ -15,5 +15,5 @@ MonoBehaviour:
   displayName: Park
   sprite: {fileID: 0}
   baseCost: 700
-  baseOutputPerMinute: 20
+  baseOutputPerMinute: 1000
   upgradeFactor: 1.6
