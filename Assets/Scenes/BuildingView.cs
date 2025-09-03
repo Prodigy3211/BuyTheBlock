@@ -68,19 +68,24 @@ public class BuildingView : MonoBehaviour, IPointerClickHandler
         currentHealth = Mathf.Min(type.maxHealth, currentHealth + type.repairChunk);
         return true;
     }
-    public bool ApplyDecay(float seconds)
+    public void ApplyDecay()
     {
+
+        //100 - 1 every Tick
         if (!Owned || type.decayPerMinute <= 0f || currentHealth <= 0) return false;
-        float perSecond = type.decayPerMinute / 60f;
-        float raw = perSecond * seconds + _decayCarry;
+        currentHealth -= 1f * Time.deltaTime;
+        Debug.Log(currentHealth);
+        
+        // float perSecond = type.decayPerMinute / 60f;
+        // float raw = perSecond * seconds + _decayCarry;
 
-        int whole = Mathf.FloorToInt(raw);
-        _decayCarry = raw - whole;
+        // int whole = Mathf.FloorToInt(raw);
+        // _decayCarry = raw - whole;
 
-        if (whole <= 0) return false;
+        // if (whole <= 0) return false;
 
-        int before = currentHealth;
-        currentHealth = Mathf.Max(0, currentHealth - whole);
-        return currentHealth != before;
+        // int before = currentHealth;
+        // currentHealth = Mathf.Max(0, currentHealth - whole);
+        // return currentHealth != before;
     }
 }
