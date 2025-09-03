@@ -17,3 +17,6 @@ MonoBehaviour:
   baseCost: 50
   baseOutputPerMinute: 200
   upgradeFactor: 1.6
+  maxHealth: 100
+  repairChunk: 25
+  decayPerMinute: 90

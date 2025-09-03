@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject panel;
     [SerializeField] TMP_Text title, level, output, cashLabel;
     [SerializeField] Button buyBtn, upgradeBtn, repairBtn;
-    [SerializeField] Slider healthBar;
+    [SerializeField] HealthBarController healthUI;
     [SerializeField] TMP_Text message;
     BuildingView current;
     Coroutine msgCo;
@@ -23,7 +23,7 @@ public class UIManager : MonoBehaviour
             cashLabel.text = $"${Economy.I.cash}";
     }
 
-    public bool IsOpen => panel && panel.activeSelf;
+    // public bool IsOpen => panel && panel.activeSelf;
 
     public void Open(BuildingView view)
     {
@@ -33,22 +33,27 @@ public class UIManager : MonoBehaviour
     }
     public void Close() { panel.SetActive(false); current = null; }
 
-    void Refresh()
+   public void Refresh()
     {
         if (!current) return;
         title.text = current.type.displayName;
         level.text = $"Level {current.level}";
         output.text = $"{current.OutputPerMinute:0}/min";
 
+        if (healthUI != null) healthUI.Set01(current.Health01);
+        Debug.Log($"[UI] Refresh for {current.name} health01={current.Health01:0.00}");
+        bool owned = current.Owned;
+
+
         //Buttons
-        buyBtn.gameObject.SetActive(!current.Owned);
-        upgradeBtn.gameObject.SetActive(current.Owned);
-        repairBtn.gameObject.SetActive(current.Owned);
+        buyBtn.gameObject.SetActive(!owned);
+        upgradeBtn.gameObject.SetActive(owned);
+        repairBtn.gameObject.SetActive(owned);
 
         //Costs?
-        buyBtn.interactable = !current.Owned && Economy.I.cash >= current.PurchaseCost;
-        upgradeBtn.interactable = current.Owned && Economy.I.cash >= current.UpgradeCost;
-        repairBtn.interactable = current.Owned && current.health < 1f && Economy.I.cash >= 25;
+        buyBtn.interactable = !owned && Economy.I.cash >= current.PurchaseCost;
+        upgradeBtn.interactable = owned && Economy.I.cash >= current.UpgradeCost;
+        repairBtn.interactable = owned && current.currentHealth < current.type.maxHealth && Economy.I.cash >= current.RepairCost;
 
         //After you click these buttons what happens?
         buyBtn.onClick.RemoveAllListeners();
@@ -69,25 +74,7 @@ public class UIManager : MonoBehaviour
         });
 
         repairBtn.onClick.RemoveAllListeners();
-        repairBtn.onClick.AddListener(TryRepair);
-
-        void TryRepair()
-        {
-            if (current == null) return;
-
-            //Full health already
-            if (current.health >= 1f) { ShowMessage("Already At Full Health :)"); return; }
-
-            int cost = current.RepairCost;
-            if (!Economy.I.Spend(cost)) { ShowMessage("Not Enough Cash!"); return; }
-
-            // 25% refill
-            current.health = Mathf.Min(1f, current.health + 0.25f);
-
-            Refresh();
-        }
-
-        if (healthBar) healthBar.value = current ? Mathf.Clamp01(current.health) : 0f;
+        repairBtn.onClick.AddListener(() => { if (current.TryRepair()) Refresh(); else NotEnoughCash(); });
 
     }
 
@@ -107,16 +94,20 @@ public class UIManager : MonoBehaviour
     void NotEnoughCash()
     {
         if (!message) return;
-        if (msgCo != null) StopCoroutine(msgCo);
-        msgCo = StartCoroutine(Flash("Not enough cash my Dude..."));
+        message.gameObject.SetActive(true);
+        message.text = "Not Enough Cash My Dude..";
+        CancelInvoke(nameof(HideMsg));
+        Invoke(nameof(HideMsg), 1.2f);
     }
 
-    IEnumerator Flash(string txt)
-    {
-        message.text = txt;
-        message.gameObject.SetActive(true);
-        yield return new WaitForSeconds(1.2f);
-        message.gameObject.SetActive(false);
-    }
+    void HideMsg() => message.gameObject.SetActive(false);
+
+    // IEnumerator Flash(string txt)
+    // {
+    //     message.text = txt;
+    //     message.gameObject.SetActive(true);
+    //     yield return new WaitForSeconds(1.2f);
+    //     message.gameObject.SetActive(false);
+    // }
 
 }

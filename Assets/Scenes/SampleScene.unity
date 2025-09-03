@@ -416,7 +416,7 @@ MonoBehaviour:
   buyBtn: {fileID: 0}
   upgradeBtn: {fileID: 0}
   repairBtn: {fileID: 0}
-  healthBar: {fileID: 0}
+  healthUI: {fileID: 0}
   message: {fileID: 0}
 --- !u!114 &158141201
 MonoBehaviour:
@@ -430,7 +430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5fbfef2fcccdb047a138f5899b7067a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tickSeconds: 0.25
+  tickSeconds: 1
 --- !u!1 &187385878
 GameObject:
   m_ObjectHideFlags: 0
@@ -791,7 +791,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: {fileID: 11400000, guid: bb4b65fc3b7c5484b8a30573e33bb9dc, type: 2}
   level: 0
-  health: 1
+  currentHealth: 0
 --- !u!1 &247760638
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,7 +825,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: {fileID: 11400000, guid: 887a43e4f31e8364283f15773858f7bb, type: 2}
   level: 0
-  health: 1
+  currentHealth: 0
 --- !u!61 &247760640
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1338,7 +1338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: {fileID: 11400000, guid: 52b6defc1b7d2f040bcd80c37a7ae022, type: 2}
   level: 0
-  health: 1
+  currentHealth: 0
 --- !u!61 &307931246
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3177,7 +3177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: {fileID: 11400000, guid: 887a43e4f31e8364283f15773858f7bb, type: 2}
   level: 0
-  health: 1
+  currentHealth: 0
 --- !u!61 &1037103243
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3506,7 +3506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3577,7 +3577,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0025634766, y: 0.00024414062}
+  m_AnchoredPosition: {x: -167, y: -0.00024414062}
   m_SizeDelta: {x: -0.0048828, y: -0.00048828}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1273902547
@@ -3638,7 +3638,7 @@ MonoBehaviour:
   buyBtn: {fileID: 1413617484}
   upgradeBtn: {fileID: 367498580}
   repairBtn: {fileID: 2046522314}
-  healthBar: {fileID: 1485862827}
+  healthUI: {fileID: 1485862828}
   message: {fileID: 187385880}
 --- !u!1 &1284181874
 GameObject:
@@ -3856,7 +3856,7 @@ MonoBehaviour:
   buyBtn: {fileID: 0}
   upgradeBtn: {fileID: 0}
   repairBtn: {fileID: 0}
-  healthBar: {fileID: 0}
+  healthUI: {fileID: 0}
   message: {fileID: 0}
 --- !u!114 &1284218141
 MonoBehaviour:
@@ -4276,6 +4276,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1485862826}
   - component: {fileID: 1485862827}
+  - component: {fileID: 1485862828}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -4302,7 +4303,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 311, y: 111.22}
+  m_AnchoredPosition: {x: 267.87997, y: 0}
   m_SizeDelta: {x: 386.68, y: 74.193}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1485862827
@@ -4352,10 +4353,25 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1485862828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485862825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74d9f288b74c3d74eafd6ce54938cd30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 1485862827}
+  fill: {fileID: 215005946}
+  label: {fileID: 590818808}
 --- !u!1 &1575630988
 GameObject:
   m_ObjectHideFlags: 0
@@ -4505,7 +4521,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: {fileID: 11400000, guid: e86fb32da87528f4db8ba60545f09fb2, type: 2}
   level: 0
-  health: 1
+  currentHealth: 0
 --- !u!61 &1663561293
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4797,7 +4813,7 @@ MonoBehaviour:
   buyBtn: {fileID: 1413617484}
   upgradeBtn: {fileID: 367498580}
   repairBtn: {fileID: 2046522314}
-  healthBar: {fileID: 0}
+  healthUI: {fileID: 0}
   message: {fileID: 0}
 --- !u!1 &1917934977
 GameObject:
