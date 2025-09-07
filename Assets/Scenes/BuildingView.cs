@@ -53,4 +53,9 @@ public class BuildingView : MonoBehaviour, IPointerClickHandler
         health = Mathf.Clamp01(health + 0.25f); //Is this value reasonable?
         return true;
     }
+
+    // public void BuildingDecay()
+    // {
+        
+    // }
 }
